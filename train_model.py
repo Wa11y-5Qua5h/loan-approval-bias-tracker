@@ -1,3 +1,12 @@
+"""
+Loan Bias Predictor - ML Training Script
+Dataset: https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset
+
+Usage:
+    1. Download the dataset from Kaggle and place train.csv in the same directory
+    2. Run: python train_model.py
+    3. This will generate loan_model.pkl and feature_info.json
+"""
 
 import pandas as pd
 import numpy as np
@@ -13,7 +22,9 @@ from sklearn.impute import SimpleImputer
 import warnings
 warnings.filterwarnings('ignore')
 
-
+# ─────────────────────────────────────────────
+# 1. LOAD & EXPLORE DATA
+# ─────────────────────────────────────────────
 def load_data(path="train.csv"):
     df = pd.read_csv(path)
     print(f"Dataset shape: {df.shape}")
@@ -120,7 +131,15 @@ FEATURE_COLS = [
 def train(df_processed):
     X = df_processed[FEATURE_COLS]
     y = df_processed['Loan_Status']
-    
+
+    # ── FIX: fill any NaNs that slipped through feature engineering ──
+    # EMI, BalanceIncome, DebtToIncome can produce NaN if Loan_Amount_Term
+    # or TotalIncome contains unexpected zeros/NaNs after preprocessing.
+    # GradientBoostingClassifier will hard-crash on any NaN in X,
+    # so we fill with column medians as a safe fallback here.
+    X = X.fillna(X.median())
+    # ─────────────────────────────────────────────────────────────────
+
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
@@ -232,6 +251,11 @@ def predict_loan(model, input_dict):
     df['DebtToIncome'] = df['LoanAmount'] / (df['TotalIncome'] + 1)
     
     X = df[FEATURE_COLS]
+
+    # ── FIX: guard against NaN at inference time too ──
+    X = X.fillna(0)
+    # ─────────────────────────────────────────────────
+
     prob = model.predict_proba(X)[0][1]
     approved = prob >= 0.5
     
