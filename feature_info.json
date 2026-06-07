@@ -1,0 +1,102 @@
+{
+  "model_name": "RandomForest",
+  "features": [
+    "Gender",
+    "Married",
+    "Dependents",
+    "Education",
+    "Self_Employed",
+    "ApplicantIncome",
+    "CoapplicantIncome",
+    "LoanAmount",
+    "Loan_Amount_Term",
+    "Credit_History",
+    "Property_Area",
+    "TotalIncome",
+    "LoanAmountLog",
+    "TotalIncomeLog",
+    "EMI",
+    "BalanceIncome",
+    "DebtToIncome"
+  ],
+  "model_results": {
+    "RandomForest": {
+      "cv_mean": 0.7535,
+      "cv_std": 0.0398,
+      "test_accuracy": 0.8537
+    },
+    "GradientBoosting": {
+      "cv_mean": 0.7536,
+      "cv_std": 0.0299,
+      "test_accuracy": 0.7642
+    },
+    "LogisticRegression": {
+      "cv_mean": 0.7617,
+      "cv_std": 0.033,
+      "test_accuracy": 0.813
+    }
+  },
+  "feature_importance": {
+    "Credit_History": 0.30584,
+    "DebtToIncome": 0.09307,
+    "ApplicantIncome": 0.08108,
+    "TotalIncome": 0.06913,
+    "TotalIncomeLog": 0.06359,
+    "BalanceIncome": 0.06105,
+    "LoanAmount": 0.05715,
+    "LoanAmountLog": 0.05709,
+    "EMI": 0.05673,
+    "CoapplicantIncome": 0.04879,
+    "Property_Area": 0.02391,
+    "Loan_Amount_Term": 0.02206,
+    "Dependents": 0.01916,
+    "Married": 0.01345,
+    "Education": 0.011,
+    "Gender": 0.00919,
+    "Self_Employed": 0.00772
+  },
+  "bias_report": {
+    "gender": {
+      "mean": {
+        "Female": 0.67,
+        "Male": 0.693
+      },
+      "count": {
+        "Female": 112,
+        "Male": 489
+      }
+    },
+    "married": {
+      "mean": {
+        "No": 0.629,
+        "Yes": 0.716
+      },
+      "count": {
+        "No": 213,
+        "Yes": 398
+      }
+    },
+    "education": {
+      "mean": {
+        "Graduate": 0.708,
+        "Not Graduate": 0.612
+      },
+      "count": {
+        "Graduate": 480,
+        "Not Graduate": 134
+      }
+    },
+    "property_area": {
+      "mean": {
+        "Rural": 0.615,
+        "Semiurban": 0.768,
+        "Urban": 0.658
+      },
+      "count": {
+        "Rural": 179,
+        "Semiurban": 233,
+        "Urban": 202
+      }
+    }
+  }
+}

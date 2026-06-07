@@ -131,6 +131,8 @@ FEATURE_COLS = [
 def train(df_processed):
     X = df_processed[FEATURE_COLS]
     y = df_processed['Loan_Status']
+    X = X.fillna(X.median(numeric_only=True))
+    X = X.fillna(0)
     
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
