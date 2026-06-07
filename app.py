@@ -230,8 +230,8 @@ def sample():
         'Property_Area': 'Urban'
     })
 
+load_model()
+
 if __name__ == '__main__':
-    load_model()
     print("\n🚀 Starting Loan Predictor API at http://localhost:5000")
     app.run(debug=True, port=5000)
-
