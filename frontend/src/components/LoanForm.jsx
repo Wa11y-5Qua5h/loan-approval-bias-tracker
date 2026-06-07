@@ -50,7 +50,7 @@ export default function LoanForm() {
 
   try {
     const response = await axios.post(
-      "http://localhost:5000/predict",
+      "https://loan-approval-bias-tracker-3.onrender.com/predict",
       payload
     );
 
